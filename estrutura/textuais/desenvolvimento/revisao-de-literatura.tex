@@ -11,7 +11,7 @@ Rede neural artificial pode ser definida como sendo um conjunto interconectado d
   Uma rede neural é um processador maciçamente paralelo e distribuído, constituído de unidades de processamento simples, que tem a propensão natural para armazenar conhecimento experimental e torna-ló disponível para uso. Ela se assemelha ao cérebro em dois aspectos: o conhecimento é adquirido pela rede a partir de seu ambiente por meio de um processo de aprendizagem; forças de conexão entre neurônios, definidos como pesos sinápticos, são utilizados para armazenar o conhecimento adquirido \cite{haykin2001}.
 \end{citacao}
 
-\par Dadas essas características, as redes neurais vem sendo amplamente utilizadas para resolução de problemas que não possuem uma resolução trivial, como a classificação de imagens \cite{imaginetArticle}, a identificação de câncer de pele \cite{esteva2017dermatologist}, tomada de decisão no mercado de ações \cite{gambogi2013aplicaccao}, e entre outras áreas. Essa versatilidade de áreas em que é utilizada ocorre devido a sua generalidade na maneira de encontrar pontos no problema que devem ter mais destaque, características mais relevantes que são identificada pela rede durante seu processo de aprendizagem, sendo reavaliadas pela própria rede em cada instância testada. Dado esse fato, quem for configurar a rede não tem necessidade de ser um especialista no problema abordado para indicar quais características devem ser mais importantes. %TODO verificar a validade da ultima afirmação
+\par Dadas essas características, as redes neurais vem sendo amplamente utilizadas para resolução de problemas que não possuem uma resolução trivial, como a classificação de imagens \cite{imaginetArticle}, a identificação de câncer de pele \cite{esteva2017dermatologist}, tomada de decisão no mercado de ações \cite{gambogi2013aplicaccao}, e entre outras áreas. Essa versatilidade de áreas em que é utilizada ocorre devido a sua generalidade na maneira de encontrar pontos no problema que devem ter mais destaque, características mais relevantes que são identificada pela rede durante seu processo de aprendizagem, sendo reavaliadas pela própria rede em cada instância testada. Como dito por \citeonline{zhang2000neural}, as redes neurais possuem a habilidade de se adaptar aos dados para realizar as classificações sem a necessidade de apontar explicitamente o que deve ser observado no modelo.
 \par Segundo \citeonline{Kriesel2007NeuralNetworks} uma rede neural pode ser descrita por três elementos:
 \begin{itemize}
 \item Unidades simples de processamento, ou neurônios.
@@ -58,7 +58,7 @@ A habilidade que se destaca de uma rede neural é a aprendizagem, adaptando-se a
 \par Podemos dividir o processo de aprendizagem em três categorias principais sendo elas:
 \begin{itemize}
 \item \textbf{Aprendizado supervisionado:} método no qual uma parte da base é utilizada para treinar a rede. Assim após cada processamento é verificado o resultado da classificação, e se necessário são feitas correções nos pesos dos neurônios que influenciaram esse resultado, para assim reforçar uma classificação boa ou corrigir uma classificação ruim.
-\item \textbf{Aprendizado por reforço:} método similar ao aprendizado supervisionado, tendo como diferença a forma de avaliação. Na aprendizagem supervisionada é declarado se está correta a classificação, neste método é informado uma nota como classificação, e um avaliador baseado em entradas anteriores decide se será feito correções na rede.%TODO explicar melhor essa parte
+\item \textbf{Aprendizado por reforço:} método similar ao aprendizado supervisionado, tendo como diferença a forma de avaliação. Como dito por \citeonline{kaelbling1996reinforcement}, a principal diferença entre aprendizagem supervisionada e a aprendizagem por reforço, é que o aprendizado por reforço não apresenta conjuntos de saídas corretos e errados, e após cada ação é aplicado uma taxa de correção e indicado os estados seguintes, mas não é informado qual escolha teria sido a melhor para o caso.
 \item \textbf{Aprendizado não-supervisionado:} método no qual não existe um avaliador ou dados pré-definido informando a classe da entrada, a própria rede é responsável por agrupar os dados, os ajustes dos pesos e dos \textit{bias} é feito apartir das entradas. A rede basicamente aprende como categorizar a entrada de dados em uma quantidade finita de classes. 
 \end{itemize}	
 \subsection{\textit{Perceptron}}
@@ -72,7 +72,7 @@ e \textit{bias}.
 Para problemas mais complexos, redes com apenas um neurônio tendem a não resolve-los. Geralmente é necessário ter vários deles trabalhando em paralelo (uma camada de neurônios) \cite{Demuth:2014:NND:2721661}. \cite{haykin2001} descreve três classes de arquitetura de rede que geralmente são encontradas:
 \begin{itemize}
 \item \textbf{Redes alimentadas adiante de uma camada:} essa classe é a forma mais simples de rede em camada, na qual se tem uma camada de dados e uma camada de neurônios (camada de processamento), que também é a camada de saída, como na \autoref{fig:umacamada}. A camada de entrada de dados não é contada, pois nela não ocorre processamento.
-\begin{figure}[H]%TODO corrigir essa imagem Marcos
+\begin{figure}[H]
   \centering
   \caption{Exemplo de rede alimentada adiante de uma camada.}
   \includegraphics[width=180pt]{dados/figuras/uma_camada}
