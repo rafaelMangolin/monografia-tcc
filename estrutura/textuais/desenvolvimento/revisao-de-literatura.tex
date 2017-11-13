@@ -3,5 +3,131 @@
 \chapter{REVISÃO DE LITERATURA}
 \label{chap:fundamentacaoTeorica}
 
-É uma boa prática iniciar cada novo capítulo com um breve texto introdutório (tipicamente, dois ou três parágrafos) que deve deixar claro o quê será discutido no capítulo, bem como a organização do capítulo.
-Também servirá ao propósito de "amarrar"{} o conteúdo deste capítulo com o conteúdo do capítulo imediatamente anterior.
+Nesta seção, será descrita a revisão de literatura sobre redes neurais, \textit{deep learning} e redes convolucionais.
+
+\subsection{Rede neural}
+Rede neural artificial pode ser definida como sendo um conjunto interconectado de elementos básicos de processamento \cite{Gurney1997}. Seu funcionamento é inspirado na capacidade de aprendizado do cérebro animal, que possui uma imensa estrutura com capacidade de definir regras a partir de experiências, que vão ocorrendo durante a vida, gerando ligações físicas (sinapses) mais fortes, aprimorando assim o que foi aprendido \cite{haykin2001}.
+\begin{citacao}
+  Uma rede neural é um processador maciçamente paralelo e distribuído, constituído de unidades de processamento simples, que tem a propensão natural para armazenar conhecimento experimental e torna-ló disponível para uso. Ela se assemelha ao cérebro em dois aspectos:
+    \begin{enumerate}  
+    \item{O conhecimento é adquirido pela rede a partir de seu ambiante através de um processo de aprendizagem.}  
+    \item{Forças de conexão entre neurônios, definidos como pesos sinápticos, são utilizados para armazenar o conhecimento adquirido.}
+    \end{enumerate}
+   \cite{haykin2001}
+\end{citacao}
+
+\par Dadas essas características, as redes neurais vem sendo amplamente utilizadas para resolução de problemas que não possuem uma resolução trivial, como a classificação de imagens \cite{imaginetArticle}, a identificação de câncer de pele \cite{esteva2017dermatologist}, tomada de decisão no mercado de ações \cite{gambogi2013aplicaccao}, e entre outras áreas. Essa versatilidade de áreas em que é utilizada é devido a sua generalidade na maneira de encontrar pontos no problema que devem ter mais destaque, características mais relevantes que são identificada pela rede durante seu processo de aprendizagem, sendo reavaliadas pela própria rede em cada instância testada. Dado esse fato, quem for configurar a rede não tem necessidade de ser um especialista no problema abordado para indicar quais características devem ser mais importantes.
+\par Segundo \cite{Kriesel2007NeuralNetworks} uma rede neural pode ser descrita por três elementos:
+\begin{itemize}
+\item Unidades simples de processamento, ou neurônios.
+\item Elos de conexão entre os neurônios (sinapses).
+\item A importância entre a conexão de um neurônio com outro, descrita por uma função de peso \textit{w}.
+\end{itemize}
+\par Uma rede neural pode ser descrita matematicamente pela tríplice ($N$,$V$,$w$), onde $N$ é um conjunto de neurônios, $V$ é um conjunto de conexões entre os neurônios definida por $V = \{($i,$j) \,|\, $i,$j \in N \}$ e $w$ é a função que determina o peso das conexões definida por $w: V \implies \mathbb{R}$, descrita em $w(i,j)$.
+\subsubsection{Neurônio}
+\cite{haykin2001} define o neurônio como a unidade de processamento de informação que é primordial para o funcionamento de uma rede neural artificial. É nele que ocorre o processamento das entradas, e o redirecionamento da saída, indicando onde irá influenciar tal processamento.
+\par Na \autoref{fig:neuronio} é possível identificar os três elementos fundamentais de um neurônio:
+
+\begin{figure}[H]
+  \centering
+  \caption{Modelo de um neurônio, contendo as entradas, funções de peso, função somadora, o \textit{bias}, função de ativação da saída.}
+  \includegraphics[width=300pt]{dados/figuras/neuron}
+  \fonte{Fonte: imagem retirada do  \textit{Google}\protect\footnotemark}
+  \label{fig:neuronio}
+\end{figure}
+
+\footnotetext{http://www.gsigma.ufsc.br/popov/aulas/rna/neuronio\_artificial/neuronio\_artificial.jpg, acessada em 02 de junho de 2017, ás 18:53}
+\begin{itemize}
+\item O fluxo de entrada dos dados, sendo ele um conjunto de conexões que serão sujeitas a função de peso, para ser feito o uso na função somadora \cite{haykin2001}. As conexões podem se originar tanto de uma entrada de dados na rede, quanto de neurônios que estão localizados em camadas superiores.
+\item A função somadora é responsável por realizar o processamento do fluxo de entrada.
+Um exemplo desse tipo de função é a soma dos pesos \cite{Kriesel2007NeuralNetworks}, a função realiza a multiplicação do peso $w_{kj}$ com a entrada $x_j$, e depois realiza a soma das $m$ entradas do neurônio representada pela função matemática:
+\par \[u_k = sum_{j=1}^{m} w_{kj}x_j\]
+\par O resultado dessa etapa é propagado pela rede dados os critérios da função de ativação.
+\item A função de ativação é responsável por restringir a abrangência do dado gerado pelo processamento do neurônio. Foi identificado por \cite{haykin2001} três tipos básicos de função de ativação sendo elas:
+  \begin{itemize}
+    \item \textbf{Função de limiar}:
+\[ f(x)= \begin{cases} 1&se \ x \ge 0 \\ -1 & se\ x < 0 \end{cases} \]
+      \par É conhecido na literatura como função de \textit{Heaviside}, definindo a saída de maneira binaria.
+    \item \textbf{Função linear por partes}: 
+\[ f(x)= \begin{cases} 1&se \ x \ge 1 \\x & se\ 0\le x < 1 \\ 0 & se\ x < 0 \end{cases} \]
+      \par Esse tipo de função pode ser analisada como uma tentativa de simulação de um amplificador não linear, tendo sua área variável e seus pontos de saturação. 
+    \item \textbf{Função Sigmoide}: 
+\[ f(x)= \frac{1}{1 + exp(-av)} \]
+      \par Esse tipo de função de ativação é o mais utilizado na construção de redes neurais artificiais \cite{haykin2001}. É definida por uma função crescente não linear, quando seu parâmetro de curva se aproxima do infinito, apresenta comportamento semelhante a funções de limiar.
+  \end{itemize}
+\end{itemize}
+\par O modelo neural da figura acima também inclui um \textit{bias} $(b_k)$ aplicado externamente. Tem como função aumentar ou diminuir a entrada mínima de dados. Defini um limiar no neurônio e pode ser utilizado para o cálculo da função de ativação. 
+\par Dado as iteração, a \textit{bias} e os pesos da entrada podem ser modificados pelo processo de aprendizagem, aprimorando sua resposta conforme a rede é treinada.  
+\subsubsection{Processos de aprendizagem}
+A habilidade que se destaca de uma rede neural é a aprendizagem, adaptando-se aos dados que estão em seu ambiente, para melhorar o seu desempenho. Essa habilidade vem do processo de aprendizagem da rede neural artificial, que é definido por \cite{Demuth:2014:NND:2721661} como o procedimento de ajuste das funções de pesos e dos \textit{bias} dos neurônios da rede, acontecendo na etapa de \textit{"treino"} da rede e tem como objetivo preparar a rede para executar uma tarefa. 
+\par Podemos dividir o processo de aprendizagem em três categorias principais sendo elas:
+\begin{itemize}
+\item \textbf{Aprendizado supervisionado:} método onde uma parte da base é utilizada para treinar a rede. Assim após cada processamento é verificado o resultado da classificação, e se necessário são feitas correções nos pesos dos neurônios que influenciaram esse resultado, para assim reforçar uma classificação boa ou corrigir uma classificação ruim.
+\item \textbf{Aprendizado por reforço:} método similar ao aprendizado supervisionado, tendo como diferença a forma de avaliação, onde no anterior é declarado se está correta a classificação, nesse é informada uma nota para a classificação, e um avaliador baseado em entradas anteriores decide se será feito correções na rede.
+\item \textbf{Aprendizado não-supervisionado:} método onde não existe um avaliador ou dados pré-definido informando a classe da entrada, a própria rede é responsável por agrupar os dados, os ajustes dos pesos e dos \textit{bias} é feito apartir das entradas. A rede basicamente aprende como categorizar a entrada de dados em uma quantidade finita de classes. 
+\end{itemize}	
+\subsubsection{\textit{Perceptron}}
+O \textit{perceptron} é tido como a forma mais simples de rede neural para classificar duas classes que são linearmente separáveis \cite{haykin2001}. É composto por um único neurônio com pesos de conexões e \textit{bias} ajustáveis, onde quando possui apenas um neurônio é limitado a classificar a entrada apenas em duas classes. 
+\par A rede é inicializada com pesos aleatórios, e após a execução de cada entrada sua saída é comparada com o resultado esperado, obtendo assim um sinal de erro, que é utilizado para fazer ajustes nos pesos. Processo semelhante ao aprendizado supervisionado.
+\par Uma generalização do \textit{perceptron}, é o perceptron de múltiplas camadas. Onde a rede é configurada em no mínimo três camadas, onde a primeira delas é a camada de entrada, em que ocorrem a entrada dos dados na rede, e a última é a camada de saída onde está contida a classificação da entrada. As camadas intermediárias tem a função de analisar características mais complexas da entrada, dando possibilidade de uma melhor classificação.
+\par O método de aprendizagem utilizado pelo \textit{perceptron} de múltiplas camadas é conhecido como \textit{error backpropagation} (algorítimo de retropropagação de erro) \cite{haykin2001}. Para isso, utiliza do método de aprendizado supervisionado de correção por erro. Quando é identificada a necessidade de ajuste nos pesos, ocorre uma 
+retropropagação nos neurônios que influenciaram a classificação, ajustando seus pesos 
+e \textit{bias}.
+\subsubsection{Tipos de redes}
+Para problemas mais complexos, redes com apenas um neurônio tendem a não resolve-los. Geralmente é necessário ter vários deles trabalhando em paralelo (uma camada de neurônios) \cite{Demuth:2014:NND:2721661}. \cite{haykin2001} descreve três classes de arquitetura de rede que geralmente são encontradas:
+\begin{itemize}
+\item \textbf{Redes alimentadas adiante de uma camada:} essa classe é a forma mais simples de rede em camada, onde se tem uma camada de dados e uma camada de neurônios (camada de processamento), que também é a camada de saída, como na Figura \ref{fig:umacamada}. A camada de entrada de dados não é contada, pois nela não ocorre processamento.
+\begin{figure}[H]
+  \centering
+  \caption{Exemplo de rede alimentada adiante de uma camada.}
+  \includegraphics[width=180pt]{dados/figuras/uma_camada}
+  \caption*{Fonte: \cite{haykin2001}}
+  \label{fig:umacamada}
+\end{figure}
+
+\item \textbf{Redes alimentadas diretamente com múltiplas camadas:} essa classe de rede, é também alimentada adiante, mas possui uma ou mais camadas ocultas. As camadas ocultas estão localizadas entre a camada de entrada de dados e a camada de saída. Ao adicionar camadas ocultas na rede é  possível ter acesso a características mais específicas da entrada, melhorando o resultado da rede.
+\par Como representado na Figura \ref{fig:multicamada}, nesse modelo cada camada só fornece dados à camada posterior, e reciprocamente, só recebe dados da camada anterior. Exemplificando, a camada de entrada recebe os dados e formata a saída para a entrada da camada seguinte, a primeira camada oculta processa os dados fornecidos pela camada de entrada e o formata para a camada seguinte. Esse processo continua até chegar na camada de saída, conhecida também como camada final, a saída produzida por essa camada contém a resposta global produzida pela rede para a entrada fornecida na camada inicial.
+\begin{figure}[H]
+  \centering
+  \caption{Exemplo de rede alimentada diretamente de múltiplas camadas.}
+  \includegraphics[width=180pt]{dados/figuras/multi_camadas}
+  \caption*{Fonte: \cite{haykin2001}}
+  \label{fig:multicamada}
+\end{figure}
+\item \textbf{Redes recorrentes:} essa classe de arquitetura se diferencia das anteriores pelo fato de possuir pelo menos uma camada com realimentação, ou seja, a saída da camada serve de entrada para a mesma, exemplo Figura \ref{fig:retroalimentacao}. É dito que a rede possui uma auto-realimentação quando a saída de um neurônio realimenta a sua entrada.
+\begin{figure}[H]
+  \centering
+  \caption{Exemplo de rede retroalimentada.}
+  \includegraphics[width=180pt]{dados/figuras/retroalimentacao}
+  \caption*{Fonte: \cite{haykin2001}}
+  \label{fig:retroalimentacao}
+\end{figure}
+\end{itemize}
+\subsection{\textit{Deep learning}}
+\textit{Deep learning} pode ser definido como uma hierarquia de "\textit{conceitos}" de aprendizagem, onde "\textit{conceitos}" complexos se originam de grupos formados por "\textit{conceitos}" mais simples. Se representar esses "\textit{conceitos}" em um grafo, é possível ver como um "\textit{conceito}" é montado baseado no outro, como se possuissem muitas camadas \cite{Goodfellow-et-al-2016}.
+
+\begin{citacao}
+    \textit{Deep learning} permite que modelos computacionais compostos de múltiplas camadas de processamento aprendam representações de dados com múltiplos níveis de abstração.
+    %[...].
+    %        Esses métodos tem drasticamente melhorado o estado-da-arte em reconhecimento de fala, reconhecimento visual de objetos, detecção de objetos e muitos outros domínios como na medicina.
+   O  \textit{deep learning} descobre estruturas complexas em vastos conjuntos de dados com o uso do algoritmo de retropropagação para indicar como a máquina deve mudar seus parâmetros internos que são utilizados para computar a representação resultante da camada anterior em cada camada.\cite{lecun2015deep}
+\end{citacao}
+
+\subsubsection{Redes neurais convolucionais}
+Redes convolucionais \cite{lecun1989backpropagation}, são um tipo especializado de rede neural para processamento de dados que se organizam em grade (ou matriz), tendo como um exemplo de entrada uma imagem, uma matriz de \textit{bits}.
+\par Elas possuem o nome de rede convolucional, pois em algumas de suas camadas ocultas ela possui uma camada de convolução. Outro tipo de camada muito utilizada nessas redes é a camada de \textit{pooling} \cite{Goodfellow-et-al-2016}.
+\subsubsection{Camada de convolução}
+Camadas de convolução são baseadas essencialmente na operação de convolução. Segundo \cite{Goodfellow-et-al-2016}, a operação de convolução é descrita por uma operação que ocorre entre duas funções, podendo ser descrita da seguinte maneira:\[s(t) = (x*w)(t)\]
+
+
+Em redes convolucionais os argumentos da função de convolução são geralmente compostos pela a entrada de dado e o \textit{kernel} utilizado. E sua saída é um mapa de características.
+\par Assim a entrada de dados normalmente é uma matriz de dados, no caso uma imagem. O \textit{kernel} utilizado também costuma ser uma matriz de parâmetros que podem ser ajustados pelo processo de aprendizagem (retropropagação). E como saída, cria uma matriz da dados com algumas características ressaltadas.
+\subsubsection{Camada de \textit{pooling}}
+A camada de \textit{pooling} faz uso da função de \textit{pooling} para modificar o dado de entrada, ajudando assim a tornar a representação supostamente constante para pequenas translações da entrada \cite{Goodfellow-et-al-2016}. Exemplificando, em uma imagem de um avião a camada de \textit{pooling} permite a rede identificar números, mesmo que estes não estejam localizados no mesmo local, ou inclinação de cada respectiva imagem.
+\begin{figure}[H]
+  \centering
+  \caption{Exemplo de como é feito a ativação de um neurônio na camada de \textit{pooling}.}
+  \includegraphics[width=200pt]{dados/figuras/pooling}
+  \caption*{Fonte: \cite{Goodfellow-et-al-2016}}
+  \label{fig:retroalimentacao}
+\end{figure}
