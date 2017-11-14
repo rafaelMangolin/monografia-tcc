@@ -2,8 +2,7 @@
 
 \chapter{METODOLOGIA}
 \label{chap:metodologia}
-%TODO melhorar descrição da sessão
-Nessa seção, serão descritas no desenvolvimento dessa monografia, sendo elas a formulação e pré-processamento da base de dados, a configuração da rede neural e sua codificação utilizando o \textit{framework} \textit{keras} \cite{chollet2015keras}, e pesquisas e aplicações de melhorias para a rede neural proposta.
+Nessa seção, são descritas as etapas do desenvolvimento dessa monografia, sendo elas a formulação e pré-processamento da base de dados, a configuração da rede neural e sua codificação utilizando o \textit{framework} \textit{keras} \cite{chollet2015keras}, e pesquisas e aplicações de melhorias para a rede neural proposta como o \textit{data augmentation} e a inicialização dos pesos a partir de uma rede já treinada.
 
 \section{Formulação da base}
 No aprendizado de máquina, a base de dados em que serão feitos os treinos e os testes do método escolhido devem possuir um balanceamento na distribuição de amostras por classes, e as amostras de uma mesma classe devem possuir características que as diferenciem das outras amostras de outras classes.
@@ -12,23 +11,27 @@ No aprendizado de máquina, a base de dados em que serão feitos os treinos e os
 \par As imagens utilizadas para a formulação da base de dados desse trabalho foram retiradas das bases de dados \textit{ImageNet}\cite{deng2009imagenet} e \textit{Food-101}\cite{bossard14}. A base \textit{ImageNet} é densamente estruturada e organizada em hierarquia de árvore, facilitando assim encontrar as categorias que estão relacionadas ao tema abordado. Já base \textit{Food-101} é composta de 101 classes de imagens de comida, selecionadas e com um tamanho fixo de 1000 imagens por classe. A precisão de categorização das bases \textit{ImageNet} e \textit{Food-101} são necessárias para a formulação da base de teste deste projeto, tendo em vista que a categorização manual de imagens não seria uma abordagem viável, uma vez que redes neurais convolucionais demandam uma grande quantidade de imagens para um treinamento adequado.  
 
 \par A base formulada possui um total de 16000 imagens separadas em 16 classes, sendo dessas classes 13  relacionadas com comida (\textit{chocolate cake, french fries, hamburger, ice cream, pizza, spaghetti bolognese, sushi,club sandwich, filet mignon, fried rice, hot dog, steak, tacos}) e três não relacionadas com comida (\textit{domestic animal, people, plant}). A diversidade dessas imagens seguem como exemplo na \autoref{fig:imagebase}.
-%TODO Alterar essa imagem
 \begin{figure}[H]
   \centering
   \caption{Exemplos de imagens encontradas na base de dados.}
   \includegraphics[width=300pt]{dados/figuras/imagembase}
-  \fonte{Fonte: imagens retiradas da base \textit{ImageNet}\cite{deng2009imagenet}}
+  \fonte{imagens retiradas das bases \textit{ImageNet}\cite{deng2009imagenet} e \textit{Food-101}\cite{bossard14}}
   \label{fig:imagebase}
 \end{figure}
 
+%\par As amostras das 13 classes relacionadas a comida foram retiradas da base \textit{Food-101}, já as amostras das três classes não relacionadas com comida foram retiradas da base \textit{ImageNet}. Isso ocorreu devido a falta de amostras com as classes relacionadas com comida na base \textit{ImageNet}
+
 \subsection{Pré-processamento}
 \par Redes neurais convolucionais requerem de uma grande quantidade de imagens, dessa maneira as entradas fornecidas para a rede neural devem seguir um padrão, onde todas as imagens devem possuir as mesmas dimensões. Assim as imagens foram redimensionadas para 227x227 \textit{pixels}, tendo em vista que é um valor que obteve bons resultados em trabalhos semelhantes \cite{imaginetArticle}. Nas alterações de dimensões das imagens foi realizado um corte nas imagens originais para forçar uma formato quadrado antes de ser aplicado o redimensionamento, preservando os formatos das imagens.
-\par Para a realização dos treinos e testes com a rede neural a base de dados foi separada em dados de treino e dados de teste. Onde 70\% das imagens (11200 imagens) de cada classe serão utilizadas para o treino da rede neural, e os 30\% das imagens restantes  (4800 imagens) serão utilizadas para a fase de teste da rede neural.
+\par Para a realização dos treinos e testes com a rede neural a base de dados foi separada em dados de treino e dados de teste. Como informado na \autoref{tab:base_images} 70\% das imagens (11200 imagens) de cada classe serão utilizadas para o treino da rede neural, e os 30\% das imagens restantes (4800 imagens) serão utilizadas para a fase de teste da rede neural.
 
 %TODO Adicionar tabela com as classes a quantidade de treino, teste e total
+\input{./dados/tabelas/tabela_images}
+
 
 \section{Configuração da Rede Neural}
-A configuração da rede neural convolucional utilizada nesse projeto é fundamentada na rede neural \textit{AlexNet} definida por \citeonline{imaginetArticle}. Essa rede utiliza de 8 camadas ocultas de processamento, sendo cinco camadas convolucionais e três camadas fortemente conectadas. Tendo em vista que a rede utilizada como exemplo foi estruturada para classificar mil classes, é necessário fazer algumas adaptações na rede para classificar uma quantidade menor de classes, uma dessas alterações seria a modificação da função \textit{softmax} para obter o resultado da classificação na última camada.
+
+A configuração da rede neural convolucional utilizada nesse projeto é fundamentada na rede neural \textit{AlexNet} definida por \citeonline{imaginetArticle}. Essa rede utiliza de 8 camadas ocultas de processamento, sendo cinco camadas convolucionais e três camadas fortemente conectadas. Tendo em vista que a rede utilizada como exemplo foi estruturada para classificar mil classes, é necessário fazer algumas adaptações para classificar uma quantidade menor de classes, uma dessas alterações seria a modificação da função \textit{softmax} para obter o resultado da classificação na última camada.
 \par A primeira camada de convolução da rede irá separar a entrada, uma imagem de 227x227X3 em 96 núcleos de 11x11x3 (com uma distancia de 4 \textit{pixels} entre os centros das imagens vizinhas), onde cada imagem gerada será processada separadamente. Após essa camada é aplicada uma camada de \textit{max pooling}.
 \par A segunda camada convolucional tem como entrada a saída da primeira camada convolucional normalizada e com \textit{pooling} aplicado, essa entrada é filtrada em 256 núcleos de 5x5x48. Após esse camada também é aplicado uma camada de \textit{max pooling}.
 \par A terceira camada convolucional possui 384 núcleos de 3x3x256 que são conectados a entrada fornecida pela saída da segunda camada convolucional normalizada e aplicado o \textit{pooling}. As conexões entre a terceira, quarta e quinta camada convolucional, não possuem nenhuma operação de \textit{pooling} entre si. 
@@ -43,7 +46,7 @@ A configuração da rede neural convolucional utilizada nesse projeto é fundame
   \centering
   \caption{Trecho de código com implementação utilizando o \textit{framework} \textit{keras} das duas primeiras camadas convolucionais da rede neural, contendo a definição da entrada e as implementações das camadas de transição entre as camadas de convolução um e dois.}
   \includegraphics[width=400pt]{dados/figuras/exemplo_keras}
-  \caption*{Fonte: Imagem produzida pelo autor (2017).}
+  \fonte{Imagem produzida pelo autor (2017).}
   \label{fig:conv_keras}
 \end{figure}
 
@@ -52,20 +55,24 @@ A configuração da rede neural convolucional utilizada nesse projeto é fundame
 
 Melhorias no desempenho de redes neurais podem ser aplicadas em diversas etapas do processo de aprendizado e classificação. O aumento da base de treino, definir camadas serão para serem treinadas em determinadas épocas, a inicialização dos pesos da rede neural com valores de uma rede treinada com uma quantidade maior de amostras e o aprimoramento dos parâmetros de configuração da rede, são métodos que podem ser utilizados para aprimorar sua performance de classificação.
 
-%colocar referencia das sessões que foram descritos as tecnicas utilizadas 
 \par Nesse projeto foram aplicadas técnicas para a melhora na classificação, sendo elas
 %técnicas o ajuste empírico da taxa de descarte de neurônios nas camadas totalmente conectadas,
-o aumento dos dados na base de treino e a inicialização dos pesos da rede neural com pesos de uma rede já treinada. Essas técnicas são descritas mais detalhadamente nas seções a seguir.
+o aumento dos dados na base de treino e a inicialização dos pesos da rede neural com pesos de uma rede já treinada. %Essas técnicas são descritas mais detalhadamente nas seções a seguir.
 
 \subsection{\textit{Data augmentation}}
 Uma técnica que vem sendo muito utilizada no para a redução do \textit{overfitting} na fase de treino de uma rede neural é a \textit{data augmentation} \cite{cui2015data}. 
 Os dados da base são ligeiramente modificados, para obter aumento na quantidade de amostras.
-%TODO colocar referencia aki
 Essas mudanças nas imagens podem ser inversões nos eixos, pequenas rotações, aproximações em certas partes das imagens ou até a aplicação da imagem em escala cinza.
-Essa técnica tem o propósito de aumentar a quantidade de amostras em que serão realizados os treinos, buscando evitar um \textit{overfitting}.
+Essa técnica tem o propósito de aumentar a quantidade de amostras em que serão realizados os treinos, buscando evitar um \textit{overfitting} \cite{imaginetArticle}.
 \par Nesse projeto foi utilizada a técnica de \textit{data augmentation} aplicando inversão da imagem no eixo $y$, realizando um zoom de aproximação ou distanciamento de até 20\% da imagem e aplicado uma taxa de inclinação de até 0,2 radianos. As imagens são geradas com a combinação das transformações possíveis informadas, criando nove imagens para cada imagem de treino como representado na \autoref{fig:data_augmentation}. Essas imagens são geradas durante a execução do treino da rede e são armazenadas em memória.
 
-%TODO incluir aki a imagem de data augmentation
+\begin{figure}[H]
+  \centering
+  \caption{Imagem representado a técnica de \textit{data augmentation} aplicada na base de treino. A imagem no centro é a original, e as outras possíveis modificações aplicadas na imagem original, como a inversão do eixo $y$ e o aumento e diminuição do \textit{zoom}.}
+  \includegraphics[width=400pt]{dados/figuras/data_augmentation}
+  \fonte{Imagem produzida pelo autor (2017).}
+  \label{fig:data_augmentation}
+\end{figure}
 
 \subsection{Inicialização dos pesos}
 Uma rede neural treinado do inicio ao fim, tem seus pesos inicializados de maneira aleatória e conforme vai realizando suas predições os pesos são corrigidos para melhorar o poder de classificação. A inicialização dos pesos da rede neural com valores obtidos a partir de uma rede treinada, vem sendo utilizado como maneira de melhorar a classificação. 
