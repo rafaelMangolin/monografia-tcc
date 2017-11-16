@@ -108,22 +108,21 @@ Para problemas mais complexos, redes com apenas um neurônio tendem a não resol
    O  \textit{deep learning} descobre estruturas complexas em vastos conjuntos de dados com o uso do algoritmo de retropropagação para indicar como a máquina deve mudar seus parâmetros internos que são utilizados para computar a representação resultante da camada anterior em cada camada \cite{lecun2015deep}.
 \end{citacao}
 
-\par \citeonline{bengio2013representation} categoriza o \textit{deep learning} como um método de aprendizagem de representação (do inglês, \textit{representation learning}). Métodos ditos como \textit{representation learning} são capazes receber dados sem tratamento como entrada e a partir de processamentos internos encontrar automaticamente características relevantes para realizar a classificação. Na qual, para o \textit{deep learning}, cada camada oculta de processamento produz uma nova e avalia um nova representação, podendo ser descrito como uma método de aprendizado de multi representações. Dessa maneira a entrada pode ser uma imagem, descrita em um mapa de \text{bits}, na qual a primeira camada analisaria informações mais superficiais, como contornos ou formas em certas áreas das imagens. Já na segunda camada seriam identificados padrões avaliando certas disposições de bordas ou formas em partes da imagem, ignorando pequenas variações. E na terceira camada seria identificado padrões que se assemelham a parte de objetos conhecidos, e nas camadas posteriores seriam mais padrões até chegar ao ponto de realizar a classificação dos objetos contidos na imagem \cite{lecun2015deep}.
+\par \citeonline{bengio2013representation} categoriza o \textit{deep learning} como um método de aprendizagem de representação (do inglês, \textit{representation learning}). Métodos ditos como \textit{representation learning} são capazes receber dados sem tratamento como entrada e a partir de processamentos internos encontrar automaticamente características relevantes para realizar a classificação. Na qual, para o \textit{deep learning}, cada camada oculta de processamento produz uma nova representação, podendo ser descrito como um método de aprendizado de multi representações. Dessa maneira a entrada pode ser uma imagem, descrita em um mapa de \text{bits}, na qual a primeira camada analisa informações mais superficiais, como contornos ou formas em certas áreas das imagens. Já na segunda camada seriam identificados padrões avaliando certas disposições de bordas ou formas em partes da imagem, ignorando pequenas variações. E na terceira camada seria identificado os padrões que se assemelham a parte de objetos conhecidos, e nas camadas posteriores seriam avaliados uma quantidade maior de padrões até chegar ao ponto de realizar a classificação dos objetos contidos na imagem \cite{lecun2015deep}.
 
 \subsection{Redes neurais convolucionais}
 Como descrito por \citeonline{lecun1989backpropagation} redes neurais convolucionais são um tipo especializado de rede neural para processamento de dados que se organizam em grade (ou matriz), tendo como um exemplo de entrada uma imagem, uma matriz de \textit{bits}.
-\par Elas possuem o nome de rede convolucional, pois em algumas de suas camadas ocultas ela possui uma camada de convolução. Outro tipo de camada muito utilizada nessas redes é a camada de \textit{pooling} \cite{Goodfellow-et-al-2016}.
-\par Uma camada de uma rede neural convolucional geralmente é composta de três fases: a primeira fase onde é aplicada diversas convoluções em paralelo na mesma imagem gerando um conjunto de ativações lineares; a segunda fase propõem a aplicação de uma função de ativação não linear, sendo a unidade linear de correção (do inglês \textit{rectified linear unit}, ReLU) muito utilizada atualmente \cite{lecun2015deep}; e no terceiro e ultimo estágio é utilizado uma função de \textit{pooling} para modificar o dado que será fornecido para a próxima camada.  
-
+\par Elas possuem o nome de rede convolucional, pois em algumas de suas camadas ocultas ela contém uma camada de convolução. Outro tipo de camada muito utilizada nessas redes é a camada de \textit{pooling} \cite{Goodfellow-et-al-2016}.
+\par Uma camada de uma rede neural convolucional geralmente é composta de três fases: a primeira fase onde é aplicada diversas convoluções em paralelo na mesma imagem gerando um conjunto de ativações lineares; a segunda fase propõem a aplicação de uma função de ativação não linear, sendo a unidade linear de correção (do inglês \textit{rectified linear unit}, ReLU) muito utilizada atualmente \cite{lecun2015deep}; e no terceiro e ultimo estágio é utilizado uma função de \textit{pooling} para modificar o dado que será fornecido para a próxima camada.    
 \subsubsection{Operação de convolução}
 Camadas de convolução são baseadas essencialmente na operação de convolução. Segundo \cite{Goodfellow-et-al-2016}, a operação de convolução é descrita por uma operação que ocorre entre duas funções, podendo ser descrita da seguinte maneira:\[s(t) = (x*w)(t)\] %TODO explicar o valor de t
 
 
-Em redes convolucionais os argumentos da função de convolução são geralmente compostos pela a entrada de dado ($x$) e o \textit{kernel} utilizado para a modificação ($w$). Sua saída é um mapa de características.
+Em redes convolucionais os argumentos da função de convolução são geralmente compostos pela a entrada de dado ($x$) e o \textit{kernel} ($w$) utilizado para a modificação. Sua saída é um mapa de características (\textit{feature maps}).
 
-\par Assim a entrada de dados normalmente é uma matriz de dados, no caso uma imagem. O \textit{kernel} utilizado também costuma ser uma matriz de parâmetros que podem ser ajustados pelo processo de aprendizagem (retropropagação). E como saída, cria uma matriz da dados com algumas características ressaltadas.
+\par Assim, a entrada de dados normalmente é uma matriz, nesse caso uma imagem. O \textit{kernel} utilizado também costuma ser uma matriz de parâmetros que podem ser ajustados pelo processo de aprendizagem (retropropagação). E como saída, cria uma matriz da dados com algumas características ressaltadas.
 
-\par A operação de convolução é uma maneira eficiente de descrever transformações para serem aplicadas em áreas menores mantendo a linearidade, em todo o dado de entrada. Como levantado por \citeonline{Goodfellow-et-al-2016}, para realizar uma operação de subtração entre os \textit{pixels} de uma imagem, para serem encontradas as bordas contidas na imagem como visto na \autoref{fig:convolution}, é necessário uma quantidade muito menor de computação para obter o resultado desejado.
+\par A operação de convolução é uma maneira eficiente de descrever transformações para serem aplicadas em áreas menores mantendo a linearidade, em todo o dado de entrada. Como levantado por \citeonline{Goodfellow-et-al-2016}, para realizar uma operação de subtração entre os \textit{pixels} de uma imagem, para serem encontradas as bordas contidas na imagem como visto na \autoref{fig:convolution}, é necessário uma quantidade muito menor de computação para obter o resultado desejado quando é utilizado a convolução.
 
 \begin{figure}[H]
   \centering
@@ -151,12 +150,28 @@ A função de ativação linear (ReLu), vem sendo recomendada a ser utilizada em
 A aplicação da função de \textit{pooling} para modificar o dado de entrada, ajuda a tornar o modelo classificador adaptado a pequenas translações da entrada \cite{Goodfellow-et-al-2016}. Dessa forma a aplicação dessa operação permite identificar se o objeto está contido na imagem independente do local que aparece e da inclinação que apresenta. Essa característica se torna muito eficaz para ser aplicada em redes que necessitam dessa variabilidade de padrões de posição para uma mesma classe.
 
 \par Exemplificando, em uma carta a aplicação da operação de \textit{pooling} permite a rede identificar os números do código postal que estão escrito a mão na carta, mesmo que estes não estejam localizados no mesmo local, ou inclinação de cada respectiva imagem, como exemplo na \autoref{fig:pooling}. 
-\begin{figure}[H]%TODO traduzir
+\begin{figure}[H]
   \centering
   \caption{Exemplo de como é feito a ativação de um neurônio na camada de \textit{pooling}.}
   \includegraphics[width=200pt]{dados/figuras/pooling}
   \fonte{\cite{Goodfellow-et-al-2016}}
   \label{fig:pooling}
 \end{figure} 
+
+% \subsubsection{Camadas densamente conectadas}
+
+\subsubsection{\textit{Dropout}}
+Um dos grandes problemas do uso de CNN é o \textit{overfitting}, que ocorre quando a base disponível para o treino é pequena ou quando a rede neural possui muitas camadas. Uma estratégia utilizada por \citeonline{imaginetArticle} é a aplicação da técnica de \textit{dropout} em algumas camadas da rede.
+\par \citeonline{srivastava2014dropout} define o termo \textit{dropout} como a remoção temporária de alguns neurônios da rede, junto com suas conexões de entradas e saídas como é possível visualizar na \autoref{fig:dropout}. Essa operação, que remove virtualmente o neurônio da rede neural, ocorre somente no fase de treino, na qual quando é ativada no neurônio o excluindo nessa execução do processo de aprendizagem da rede.
+\begin{figure}[H]
+  \centering
+  \caption{Exemplo da aplicação do \textit{dropout} em uma rede neural. Na imagem (1) apresenta uma rede normal sem remoção de neurônio. Na imagem (2) mostra a rede com o \textit{dropout} ativado em alguns neurônios, os removendo temporariamente.}
+  \includegraphics[width=400pt]{dados/figuras/dropout}
+  \fonte{\cite{srivastava2014dropout}}
+  \label{fig:pooling}
+\end{figure} 
+\par Essa operação vem com o intuito de reduzir o \textit{overfitting}. A redução do tempo de execução e  o aprendizado de atributos mais relevantes pela rede são outras características que se destacam quando aplicada essa técnica.
+
+% \subsubsection{\textit{Softmax}}
 
 %TODO esplicar sobre dropout e sofmax e fullconected layers
