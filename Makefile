@@ -79,3 +79,7 @@ open:
 	@echo "Abrindo o PDF"
 	@$(OPENPDF) $(SOURCE).pdf &
 	@echo "Ok"
+
+text:
+	@rm teste.txt
+	@pdftotext utfpr-tcc.pdf teste.txt
