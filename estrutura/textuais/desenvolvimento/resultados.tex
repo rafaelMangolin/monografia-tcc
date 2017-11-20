@@ -7,11 +7,11 @@
 
 Nesta seção estão descritos os resultados obtidos a partir dos experimentos realizados na rede neural convolucional proposta, apresentando também os resultados obtidos com as variações das aplicações das técnicas propostas.
  %A métrica utilizada para avaliar os modelos foi a acurácia, que determina a porcentagem de acerto do classificador.%TODO definir melhor a metrica
- Os experimentos foram iniciados a partir da rede neural convolucional sem nenhuma alteração, seguindo para a inclusão das alterações na base e melhorias na rede, com o fim de avaliar os resultados obtidos e determinar o modelo com a melhor acurácia.
+ Os experimentos foram iniciados a partir da rede neural convolucional sem nenhuma alteração, seguindo para a inclusão das alterações na base e melhorias na rede, com o propósito de avaliar os resultados obtidos e determinar o modelo com a melhor acurácia.
 
 %\par Os experimentos foram executados utilizando máquinas com as seguintes configurações: processado i7  
 
-\par Nos experimentos iniciais realizados foram identificados que a partir de 80 épocas de execução não ocorria nenhuma modificação nas fases de treino e teste, sempre mantendo uma faixa de variação constante. Dessa maneira foi definido como padrão a quantidade de 80 épocas para a execução dos experimentos. A escolha dos parâmetros da rede como a taxa de \textit{dropout}, foram definidos com base na rede descrita por \citeonline{imaginetArticle}. Como abordagem de melhoria a taxa de \textit{dropout} foi otimizada para o modelo proposto por base de testes empíricos.
+\par Nos experimentos iniciais realizados foi identificados que a partir de 80 épocas de execução não ocorria nenhuma modificação nas fases de treino e teste, sempre mantendo uma faixa de variação constante. Dessa maneira foi definido como padrão a quantidade de 80 épocas para a execução dos experimentos. A escolha dos parâmetros da rede como a taxa de \textit{dropout}, foram definidos com base na rede descrita por \citeonline{imaginetArticle}. Como abordagem de melhoria a taxa de \textit{dropout} foi otimizada para o modelo proposto com base em testes empíricos.
 %\section{Acurácia}
 
 
@@ -28,7 +28,7 @@ O experimento realizado com o modelo inicial proposto utilizando da base de dado
 \end{figure}
 
 \section{Modelos com \textit{data augmentation} e inicialização dos pesos}
-Também foram realizados experimentos com as estratégias de melhorias da rede neural, com o objetivo de reduzir o \textit{overfitting} na rede. Foram realizados três experimentos: um aplicando a técnica de \textit{data augmentation}; um a técnica de inicialização dos pesos a partir dos valores treinados na rede desenvolvida por \citeonline{imaginetArticle}; e um ambas as técnicas. 
+Também foram realizados experimentos com as estratégias de melhorias da rede neural, com o objetivo de reduzir o \textit{overfitting} na rede. Foram realizados três experimentos: um aplicando a técnica de \textit{data augmentation}; um a técnica de inicialização dos pesos a partir dos valores treinados na rede \textit{AlexNet} desenvolvida por \citeonline{imaginetArticle}; e um com ambas as técnicas. 
 
 \par Como informado na \autoref{tab:resultado2} as acurácias obtidas na fase de teste e treino, respectivamente, apenas com \textit{data augmentation} foram de 58,23\% e 71,66\%, vendo com essa mudança causou uma redução significativa do \textit{overfitting} na rede, além de uma melhora da acurácia na fase de teste.
 
@@ -41,7 +41,7 @@ Também foram realizados experimentos com as estratégias de melhorias da rede n
   \label{fig:resultado2}
 \end{figure}
 
-\par O experimento realizado com a inicialização dos pesos obteve o resultado mais expressivo se comparado com o teste apenas com \textit{data augmentation} obtendo as acurácias na fase de teste e treino, respectivamente, de 68,08\% e 99,63\%. Com a aplicação dessa técnica foi obtido uma melhora significativa na acurácia se comparado com o modelo inicial e com o de \textit{data augmentation}, mas assim como no modelo inicial esse apresenta \textit{overfitting} na fase de treino, como é possível observar nos gráficos (2) da \autoref{fig:resultado2}, a partir da época 20 a acurácia da fase de teste permanece estável e a fase de treino continua crescendo até atingir valores próximos a 100\%.
+\par O experimento realizado com a inicialização dos pesos obteve o resultado mais expressivo se comparado com o teste apenas com \textit{data augmentation} obtendo as acurácias na fase de teste e treino, respectivamente, de 68,08\% e 99,63\%. Com a aplicação dessa técnica foi obtida uma melhora significativa na acurácia se comparado com o modelo inicial e com o de \textit{data augmentation}, mas assim como no modelo inicial esse apresenta \textit{overfitting} na fase de treino, como é possível observar nos gráficos (2) da \autoref{fig:resultado2}, a partir da época 20 a acurácia da fase de teste permanece estável e a fase de treino continua crescendo até atingir valores próximos a 100\%.
 
 \par Com o intuito de solucionar o problema de \textit{overfitting} e obter melhoria na classificação, foi realizado o teste utilizando as duas técnicas. A acurácia obtida na fase de treino foi de 98,18\% e na fase de teste obteve um valor de 71,77\%, apresentando o melhor resultado entre os três testes realizados como pode ser observado no gráfico comparativo na \autoref{fig:resultado2all}.% TODO colocar referencias que apresentam melhoria em modelos aplicados  data augmentantion e inicialização de pesos
 \begin{figure}[H]
@@ -56,5 +56,5 @@ Foram realizados experimentos com a taxa de \textit{dropout} buscando diminuir o
 
 \input{./dados/tabelas/resultado3}
 
-\par A partir da \autoref{tab:resultado3} é possível concluir que o experimento realizado com a taxa de \textit{dropout} 80\% apresentou a maior acurácia na fase de teste e apresentou a menor diferença entre os resultados da fase de treino e teste, conseguindo melhorar o \textit{overfitting} que ocorre na rede. 
+\par A partir da \autoref{tab:resultado3} é possível concluir que o experimento realizado com a taxa de \textit{dropout} 80\% apresentou a maior acurácia na fase de teste e apresentou a menor diferença entre os resultados da fase de treino e teste, conseguindo reduzir o \textit{overfitting} que ocorre na rede. 
 

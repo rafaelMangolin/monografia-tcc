@@ -36,19 +36,22 @@ Gerando uma imagem $55\times55\times96$, na qual $55\times55$ representa as dime
 
 \par A segunda camada convolucional tem como entrada a saída da primeira camada convolucional normalizada e com \textit{pooling} aplicado, essa entrada tem o formato de $27\times27\times96$ é filtrada em 256 núcleos de $5\times5\times96$, gerando uma saída de $27\times27\times256$ com as mesmas dimensões só aumentado a quantidade de filtros aplicados. Após essa camada também é aplicada uma camada de \textit{max pooling} com as mesmas configurações da camada de \textit{max pooling} anterior resultando em uma saída de $13\times13\times256$.
 
-\par A terceira camada convolucional possui 384 núcleos de $3\times3\times256$ que são conectados a entrada fornecida pela saída da segunda camada convolucional normalizada e aplicado o \textit{pooling}. O formato da saída gerada pela 3 camada é de 13x13x384. As conexões entre a terceira, quarta e quinta camada convolucional, não possuem nenhuma operação de \textit{pooling} entre si. 
-\par Assim a quarta camada convolucional possui 384 núcleos de 3x3x384 e gera uma saída de formato 13x13x384, na qual so é aplicado a convolução e não é modificado a entrada.
-\par A quinta camada possui 256 núcleos de 3x3x384 e gera uma saida com o formato de 13x13x256, reduzindo a quantidades de filtros aplicados na imagem. Após a quinta camada convolucional é aplicado uma camada de \textit{max pooling} com as mesmas configurações que as outras camadas de \textit{max pooling} utilizadas na rede e gerou uma saída de 6x6x256.
+\par A terceira camada convolucional possui 384 núcleos de $3\times3\times256$ que são conectados a entrada fornecida pela saída da segunda camada convolucional normalizada e aplicado o \textit{pooling}. O formato da saída gerada pela terceira camada é de $13\times13\times384$. As conexões entre a terceira, quarta e quinta camada convolucional, não possuem nenhuma operação de \textit{pooling} entre si. 
+
+\par Assim a quarta camada convolucional possui 384 núcleos de $3\times3\times384$ e gera uma saída de formato $13\times13\times384$, na qual so é aplicada a convolução e não é modificada a entrada.
+
+\par A quinta camada possui 256 núcleos de $3\times3\times384$ e gera uma saída com o formato de $13\times13\times256$, reduzindo a quantidades de filtros aplicados na imagem. Após a quinta camada convolucional é aplicada uma camada de \textit{max pooling} com as mesmas configurações que as outras camadas de \textit{max pooling} utilizadas na rede e gera uma saída de $6\times6\times256$.
+
 \par As duas camadas seguintes são camadas fortemente conectadas com 4096 neurônios cada, com no fim de cada uma aplicada a função de \textit{dropout} inicialmente com uma taxa de 50\%. Por fim uma camada com 16 neurônios (um neurônio para cada classe) fortemente conectada com a operação de \textit{softmax} para obter a predição da entrada.
 
 \begin{figure}[H]
   \centering
-  \caption{Diagrama que representa a arquitetura da rede neural convolucional proposta. O formato de cada camada da rede é descrito na seta que incide nele, e o formato que ele gera é infomado na seta que sai dele. Como exemplo a operação de convolução da camada convolucional 1, na qual a sua entrada é de 227x227x3 e sua saída é de 55x55x96.}
+  \caption{Diagrama que representa a arquitetura da rede neural convolucional proposta. O formato de cada camada da rede é descrito na seta que incide nele, e o formato que ele gera é infomado na seta que sai dele. Como exemplo a operação de convolução da camada convolucional 1, na qual a sua entrada é de $227\times227\times3$ e sua saída é de $55\times55\times96$.}
   \includegraphics[width=350pt]{dados/figuras/dia_rede}
   \label{fig:arqrede}
 \end{figure}
 
-\par Está sendo utilizado o \textit{framework} \textit{Keras} \cite{chollet2015keras} para descrever a rede neural. \textit{Keras} é um \textit{framework} em \textit{python} para execução de redes neurais utilizando \textit{GPU}(\textit{Graphics Processing Unit}). Com o \textit{keras} é possível configurar em alto nível uma rede neural, abstraindo a complexidade da descrição e implementação das rotinas de execução das camadas. Como exemplo de implementação temos a \autoref{fig:conv_keras}, contendo a codificação da primeira e segunda camada da rede neural proposta. Neste projeto o \textit{keras} está sendo utilizado com o \textit{back end Theano} \cite{2016arXiv160502688full} para a geração de código em \textit{Cuda}, linguagem que compila codigo para ser executado em GPU.
+\par Foi utilizado o \textit{framework} \textit{Keras} \cite{chollet2015keras} para descrever a rede neural. \textit{Keras} é um \textit{framework} em \textit{python} para execução de redes neurais utilizando \textit{GPU}(\textit{Graphics Processing Unit}). Com o \textit{keras} é possível configurar em alto nível uma rede neural, abstraindo a complexidade da descrição e implementação das rotinas de execução das camadas. Como exemplo de implementação temos a \autoref{fig:conv_keras}, contendo a codificação da primeira e segunda camada da rede neural proposta. Neste projeto o \textit{keras} está sendo utilizado com o \textit{back end Theano} \cite{2016arXiv160502688full} para a geração de código em \textit{Cuda}, linguagem que compila codigo para ser executado em GPU.
 \begin{figure}[H]
   \centering
   \caption{Trecho de código com implementação utilizando o \textit{framework} \textit{keras} das duas primeiras camadas convolucionais da rede neural, contendo a definição da entrada e as implementações das camadas de transição entre as camadas de convolução um e dois.}
@@ -59,9 +62,9 @@ Gerando uma imagem $55\times55\times96$, na qual $55\times55$ representa as dime
 
 \section{Melhorias para a rede neural proposta}
 
-Melhorias no desempenho de redes neurais podem ser aplicadas em diversas etapas do processo de aprendizado e classificação. O aumento da base de treino, definir quais camadas devem ser treinadas em determinadas épocas, a inicialização dos pesos da rede neural com valores de uma rede treinada com uma quantidade maior de amostras e o aprimoramento dos parâmetros de configuração da rede, são métodos que podem ser utilizados para aprimorar sua performance de classificação.
+Melhorias no desempenho de redes neurais podem ser aplicadas em diversas etapas do processo de aprendizado e classificação. O aumento da base de treino, a definição de quais camadas devem ser treinadas em determinadas épocas, a inicialização dos pesos da rede neural com valores de uma rede treinada com uma quantidade maior de amostras e o aprimoramento dos parâmetros de configuração da rede, são métodos que podem ser utilizados para aprimorar sua performance de classificação.
 
-\par Nesse projeto foram aplicadas técnicas para a melhora na classificação, sendo elas
+\par Neste projeto foram aplicadas técnicas para a melhora na classificação, sendo elas
 %técnicas o ajuste empírico da taxa de descarte de neurônios nas camadas totalmente conectadas,
 o aumento dos dados na base de treino e a inicialização dos pesos da rede neural com pesos de uma rede já treinada. %Essas técnicas são descritas mais detalhadamente nas seções a seguir.
 
@@ -70,7 +73,7 @@ Uma técnica que vem sendo muito utilizada no para a redução do \textit{overfi
 Os dados da base são ligeiramente modificados, para obter aumento na quantidade de amostras.
 Essas mudanças podem ser inversões nos eixos, pequenas rotações, aproximações em certas partes das imagens ou até a aplicação da imagem em escala cinza.
 Essa técnica tem o propósito de aumentar a quantidade de amostras em que serão realizados os treinos, buscando evitar um \textit{overfitting} \cite{imaginetArticle}.
-\par Nesse projeto foi utilizada a técnica de \textit{data augmentation} aplicando inversão no eixo $y$, realizando um zoom de aproximação ou distanciamento de até 20\% e aplicado uma taxa de inclinação de até 0,2 radianos. As amostras são geradas com a combinação das transformações possíveis informadas, criando nove imagens para cada imagem de treino como representado na \autoref{fig:data_augmentation}. Essas imagens são geradas durante a execução do treino da rede e são armazenadas em memória.
+\par Nesse projeto foi utilizada a técnica de \textit{data augmentation} aplicando inversão no eixo $y$, realizando um zoom de aproximação ou distanciamento de até 20\% e aplicado uma taxa de inclinação de até 0,2 radianos. As amostras são geradas com a combinação das transformações possíveis informadas, criando nove imagens a partir de cada imagem de treino como representado na \autoref{fig:data_augmentation}. Essas imagens são geradas durante a execução do treino da rede e são armazenadas em memória.
 
 \begin{figure}[H]
   \centering
@@ -80,7 +83,7 @@ Essa técnica tem o propósito de aumentar a quantidade de amostras em que serã
 \end{figure}
 
 \subsection{Inicialização dos pesos}
-Uma rede neural treinada do início ao fim, tem seus pesos inicializados de maneira aleatória e conforme vai realizando suas predições os pesos são corrigidos para melhorar o poder de classificação. A inicialização dos pesos da rede neural com valores obtidos a partir de uma rede treinada, vem sendo utilizado como maneira de melhorar a classificação \cite{Girshick_2014_CVPR}. Geralmente os pesos vêm de redes que treinaram uma quantidade muito grande de dados, conseguindo de certa forma transferir o aprendizado obtido para a rede que está inicializando os pesos. Nesse projeto foi realizado a inicialização dos pesos da rede neural, utilizando os pesos obtidos no treinamento da rede desenvolvida por \citeonline{imaginetArticle}.
+Uma rede neural treinada do início ao fim, tem seus pesos inicializados de maneira aleatória e conforme vai realizando suas predições os pesos são corrigidos para melhorar o poder de classificação. A inicialização dos pesos da rede neural com valores obtidos a partir de uma rede treinada, vem sendo utilizada como maneira de melhorar a classificação \cite{Girshick_2014_CVPR}. Geralmente os pesos vêm de redes que treinaram uma quantidade muito grande de dados, conseguindo de certa forma transferir o aprendizado obtido para a rede que está inicializando os pesos. Nesse projeto foi realizado a inicialização dos pesos da rede neural, utilizando os pesos obtidos no treinamento da rede desenvolvida por \citeonline{imaginetArticle}.
 
 % \subsection{Congelamento de camadas}
 
