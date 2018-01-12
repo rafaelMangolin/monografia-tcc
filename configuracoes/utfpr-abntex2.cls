@@ -316,7 +316,18 @@
 {%
     \setcounter{page}{2}
     \begin{center}
-        \large\MakeUppercase{\imprimirautor}\\
+        \begin{SingleSpacing}
+                    \large\MakeUppercase{\imprimirinstituicao} \\
+                \abntex@ifnotempty{\imprimirdepartamento}
+                    {
+                        \MakeUppercase{\imprimirdepartamento} \\
+                    }
+                \large\MakeUppercase{\imprimirprograma} \\
+        \end{SingleSpacing}
+        \end{center}
+        \vspace{60pt}
+    \begin{center}
+    \large\MakeUppercase{\imprimirautor}\\
     \end{center}
 
     \vspace*{96pt}

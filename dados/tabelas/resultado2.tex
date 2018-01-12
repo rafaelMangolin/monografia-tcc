@@ -1,11 +1,12 @@
 \begin{table}[H]
     \centering
-    \caption{Resultados da execução do modelo inicialmente proposto sem a aplicação de tecnicas de melhorias.
+    \caption{Resultados dos experimentos no modelo inicialmente proposto, no modelo com a aplicação de \textit{data augmentation}, no modelo com inicialização dos pesos e no modelo com ambas as técnicas aplicadas.
     \label{tab:resultado2}}
     \begin{tabular}{ccc}
         \toprule
-              & Fase de treino & Fase de Teste \\
+            Modelo & Fase de treino & Fase de Teste \\
         \midrule
+            Modelo inicial & 94,02\% & 53,6\%  \\
             Modelo com \textit{data augmentation} & 71,66\% & 58,23\%  \\
             Modelo com inicialização dos pesos & 99,63\% & 68,08\%  \\
             Modelo com \textit{data augmentation} e inicialização dos pesos & 98,18\% & 71,77\%  \\

@@ -11,28 +11,31 @@ Nesta seção estão descritos os resultados obtidos a partir dos experimentos r
 
 %\par Os experimentos foram executados utilizando máquinas com as seguintes configurações: processado i7  
 
-\par Nos experimentos iniciais realizados foi identificados que a partir de 80 épocas de execução não ocorria nenhuma modificação nas fases de treino e teste, sempre mantendo uma faixa de variação constante. Dessa maneira foi definido como padrão a quantidade de 80 épocas para a execução dos experimentos. A escolha dos parâmetros da rede como a taxa de \textit{dropout}, foram definidos com base na rede descrita por \citeonline{imaginetArticle}. Como abordagem de melhoria a taxa de \textit{dropout} foi otimizada para o modelo proposto com base em testes empíricos.
+\par Nos experimentos iniciais realizados foi identificado que a partir de 80 épocas de execução não ocorria nenhuma modificação nas fases de treino e teste, sempre mantendo uma faixa de variação constante. Dessa maneira foi definido como padrão a quantidade de 80 épocas para a execução dos experimentos. A escolha dos parâmetros da rede como a taxa de \textit{dropout}, foram definidos com base na rede \textit{AlexNet} descrita por \citeonline{imaginetArticle}. Como abordagem para a redução do \textit{overfitting}, a taxa de \textit{dropout} foi otimizada para o modelo proposto com base em testes empíricos.
 %\section{Acurácia}
 
 
 \section{Modelo inicial}
-O experimento realizado com o modelo inicial proposto utilizando da base de dados sem modificação obteve um resultado de 94,02\% de acurácia na base de treino e 53,6\% na base de teste, como apresentado na \autoref{tab:resultado1}. Com esses valores é possível dizer que ocorreu um \textit{overfitting} no modelo sobre as amostras da base de treino. Com o gráfico apresentado na \autoref{fig:resultado1} é visto que a acurácia da fase de teste a partir de 42 épocas mantém valores constantes, não apresentando um ganho expressivo, diferente da acurácia obtida na fase de treino que mantém uma curva crescente.
+O experimento realizado com o modelo inicial proposto utilizando a base de dados sem modificação obteve um resultado de 94,02\% de acurácia na base de treino e 53,6\% na base de teste, como apresentado na \autoref{tab:resultado2}. Com esses valores é possível dizer que ocorreu um \textit{overfitting} no modelo sobre as amostras da base de treino. O gráfico apresentado na \autoref{fig:resultado1} mostra que a acurácia da fase de teste mantém valores constantes, a partir de 42 épocas, não apresentando um ganho expressivo, diferentemente da acurácia obtida na fase de treino, que mantém uma curva crescente.
 
-\input{./dados/tabelas/resultado1}
+% \input{./dados/tabelas/resultado1}
 
 \begin{figure}[H]
   \centering
   \caption{Gráfico contendo a acurácia obtida na fase de treino e teste de cada época do modelo de rede neural inicialmente proposta sem a aplicação de técnicas de melhorias.}
-  \includegraphics[width=300pt]{dados/figuras/resultado1}
+  \includegraphics[width=200pt]{dados/figuras/resultado1}
   \label{fig:resultado1}
 \end{figure}
 
 \section{Modelos com \textit{data augmentation} e inicialização dos pesos}
-Também foram realizados experimentos com as estratégias de melhorias da rede neural, com o objetivo de reduzir o \textit{overfitting} na rede. Foram realizados três experimentos: um aplicando a técnica de \textit{data augmentation}; um a técnica de inicialização dos pesos a partir dos valores treinados na rede \textit{AlexNet} desenvolvida por \citeonline{imaginetArticle}; e um com ambas as técnicas. 
+Também foram realizados experimentos com as estratégias de melhorias da rede neural, com o objetivo de reduzir o \textit{overfitting} na rede. Foram realizados três experimentos: um aplicando a técnica de \textit{data augmentation}; um com a técnica de inicialização dos pesos a partir dos valores treinados na rede \textit{AlexNet} desenvolvida por \citeonline{imaginetArticle}; e um com ambas as técnicas. 
 
-\par Como informado na \autoref{tab:resultado2} as acurácias obtidas na fase de teste e treino, respectivamente, apenas com \textit{data augmentation} foram de 58,23\% e 71,66\%, vendo com essa mudança causou uma redução significativa do \textit{overfitting} na rede, além de uma melhora da acurácia na fase de teste.
+\par Como informado na \autoref{tab:resultado2}, as acurácias obtidas na fase de teste e treino, respectivamente, apenas com \textit{data augmentation} foram de 58,23\% e 71,66\%, mostrando como essa mudança causou uma redução significativa do \textit{overfitting} na rede, além de uma melhora da acurácia na fase de teste.
 
 \input{./dados/tabelas/resultado2}
+
+\par O experimento realizado com a inicialização dos pesos obteve o resultado mais expressivo se comparado com o teste apenas com \textit{data augmentation}, obtendo as acurácias na fase de teste e treino, respectivamente, de 68,08\% e 99,63\%. Com a aplicação dessa técnica foi obtida uma melhora significativa na acurácia se comparado com o modelo inicial e com o de \textit{data augmentation}, mas, assim como no modelo inicial, esse modelo apresentou \textit{overfitting} na fase de treino. Como é possível observar no gráfico (2) da \autoref{fig:resultado2}, a partir da época 20 a acurácia da fase de teste permaneceu estável e a da fase de treino continuou crescendo até atingir valores próximos a 100\%.
+
 
 \begin{figure}[H]
   \centering
@@ -41,18 +44,16 @@ Também foram realizados experimentos com as estratégias de melhorias da rede n
   \label{fig:resultado2}
 \end{figure}
 
-\par O experimento realizado com a inicialização dos pesos obteve o resultado mais expressivo se comparado com o teste apenas com \textit{data augmentation} obtendo as acurácias na fase de teste e treino, respectivamente, de 68,08\% e 99,63\%. Com a aplicação dessa técnica foi obtida uma melhora significativa na acurácia se comparado com o modelo inicial e com o de \textit{data augmentation}, mas assim como no modelo inicial esse apresenta \textit{overfitting} na fase de treino, como é possível observar nos gráficos (2) da \autoref{fig:resultado2}, a partir da época 20 a acurácia da fase de teste permanece estável e a fase de treino continua crescendo até atingir valores próximos a 100\%.
-
-\par Com o intuito de solucionar o problema de \textit{overfitting} e obter melhoria na classificação, foi realizado o teste utilizando as duas técnicas. A acurácia obtida na fase de treino foi de 98,18\% e na fase de teste obteve um valor de 71,77\%, apresentando o melhor resultado entre os três testes realizados como pode ser observado no gráfico comparativo na \autoref{fig:resultado2all}.% TODO colocar referencias que apresentam melhoria em modelos aplicados  data augmentantion e inicialização de pesos
+\par Com o intuito de solucionar o problema de \textit{overfitting} e obter melhoria na classificação, foi realizado o teste utilizando as duas técnicas. A acurácia obtida na fase de treino foi de 98,18\% e na fase de teste obteve um valor de 71,77\%, apresentando o melhor resultado entre os três testes realizados, como pode ser observado no gráfico comparativo na \autoref{fig:resultado2all}.% TODO colocar referencias que apresentam melhoria em modelos aplicados  data augmentantion e inicialização de pesos
 \begin{figure}[H]
   \centering
   \caption{Gráficos contendo as acurácias obtidas nas fases de teste dos modelos com as melhorias aplicadas.}
-  \includegraphics[width=500pt]{dados/figuras/resultado2_all}
+  \includegraphics[width=250pt]{dados/figuras/resultado2_all}
   \label{fig:resultado2all}
 \end{figure}
  
 \section{Aprimoramento da taxa de \textit{dropout}}
-Foram realizados experimentos com a taxa de \textit{dropout} buscando diminuir o \textit{overfitting} na rede. A taxa de \textit{dropout} foi variada de 50\% a 90\%, com intervalos de 10\% entre cada experimento. O modelo utilizado para a execução dos foi o com a aplicação de \textit{data augmentation} e inicialização dos pesos. Como pode ser verificado na \autoref{tab:resultado3} que a taxa de 80\% foi a que apresentou melhor resultado, com uma acurácia de 74,56\% na fase de teste e 93,96\% de acurácia na fase de treino.
+Foram realizados também experimentos com a taxa de \textit{dropout} buscando diminuir o \textit{overfitting} na rede. A taxa de \textit{dropout} foi variada de 50\% a 90\%, com intervalos de 10\% entre cada experimento. O modelo utilizado para a execução dos experimentos foi o com a aplicação de \textit{data augmentation} e inicialização dos pesos. Como pode ser verificado na \autoref{tab:resultado3}, a taxa de 80\% foi a que apresentou melhor resultado, com uma acurácia de 74,56\% na fase de teste e 93,96\% de acurácia na fase de treino.
 
 \input{./dados/tabelas/resultado3}
 
