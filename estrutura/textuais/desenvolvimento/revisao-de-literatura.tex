@@ -183,6 +183,7 @@ Um dos grandes problemas no uso de CNN é o \textit{overfitting}, que ocorre qua
 \par Essa operação é utilizada com o intuito de reduzir o \textit{overfitting}. A redução do tempo de execução e o aprendizado de atributos mais relevantes pela rede são outras características que se destacam quando aplicada a técnica de \textit{dropout}.
 
 \subsubsection{\textit{Softmax}}
-\textit{Softmax} é uma função estatística que realiza a normalização de um vetor de números para valores percentuais, na qual a soma de todos os números do vetor após a aplicação da função é de $100\%$. Na CNN, a função \textit{softmax} é utilizada como função de ativação na ultima camada, onde é obtido a classificação da entrada \cite{bishop2007pattern}. 
-\par A função \textit{softmax} é descrita pela expressão $s(x,i)=\frac{e^{x_i}}{\sum_{n=1}^{N} e^{x_k}}$, na qual $N$ é o tamanho do vetor de números, $x$ é vetor de números, $i$ é a posição do vetor que está sendo obtido a porcentagem. A expressão deve ser aplicada em todas as posições do vetor para se obter a classificação.
+\textit{Softmax} é uma função estatística que realiza a normalização de um vetor de números para valores percentuais, na qual a soma de todos os números do vetor após a aplicação da função é de $100\%$. Em CNN, a função \textit{softmax} é utilizada como a função de ativação da ultima camada, onde é obtido a classificação da entrada \cite{bishop2007pattern}. 
+\par A função \textit{softmax} é descrita pela expressão: \[s(x,i)=\frac{e^{x_i}}{\sum_{n=1}^{N} e^{x_k}}\] 
+\par Em que, $N$ é o tamanho do vetor de números, $x$ é vetor de números, $i$ é a posição do vetor que está sendo obtido a porcentagem. A expressão deve ser aplicada em todas as posições do vetor para se obter a classificação.
 %TODO esplicar sobre sofmax e fullconected layers
